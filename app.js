@@ -1,11 +1,15 @@
 'use strict';
-let max = 10;
+let max = 25;
 let attemps = 1;
 let array = [];
 let con = document.getElementById('container')
 let Image1 = document.getElementById('imageOne');
 let Image2 = document.getElementById('imageTwo');
 let Image3 = document.getElementById('imagethree');
+let arrOfSelected = [];
+let arrNumofshowen = [];
+let arrTwo = [];
+let arrThree=[];
 
 function prd(name, source) {
     this.productName = name;
@@ -13,6 +17,7 @@ function prd(name, source) {
     this.selectedPrd = 0;
     this.numofShowen = 0;
     array.push(this);
+    arrTwo.push(this.productName);
 }
 new prd('bag', 'image/bag.jpg');
 new prd('banana', 'image/banana.jpg');
@@ -54,7 +59,9 @@ function renderThreeRandomImages() {
     array[Image1Index].numofShowen++;
     array[Image2Index].numofShowen++;
     array[Image3Index].numofShowen++;
-    // console.log(`${array[Image1Index].source}${array[Image2Index].source}${array[Image3Index].source}`  )
+    arrThree[0]= Image1Index ;
+    arrThree[1]= Image2Index;
+    arrThree[2]= Image3Index;
 }
 // console.log(array);
 renderThreeRandomImages();
@@ -64,6 +71,9 @@ renderThreeRandomImages();
 
 function generateRandomIndex() {
     let randomIndex = Math.floor(Math.random() * array.length);
+    while(arrThree.includes(randomIndex)){
+        randomIndex = Math.floor(Math.random() * array.length);
+    }
     return randomIndex;
 }
 
@@ -95,12 +105,58 @@ function imageClick(event) {
             lists.appendChild(li);
             li.textContent = `${array[i].productName} Has ${array[i].selectedPrd} selectedPrds and Showen ${array[i].numofShowen}`
         }
+        for(let a = 0 ; a <array.length; a++){
+            arrOfSelected.push(array[a].selectedPrd );
+            arrNumofshowen.push(array[a].numofShowen);
+        }
+    
+        chartRender();
         document.getElementById('view').style.display = 'block';
         con.removeEventListener('click', imageClick)
+    
     }
-}
+    leftImageElement.removeEventListener('click', handleClicking);
+    rightImageElement.removeEventListener('click', handleClicking);  
+} 
+
 
 function viewResult() {
     document.getElementById('lists').style.display = 'block';
 
+}
+
+function chartRender(){
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels:arrTwo ,
+        datasets: [{
+            label: '# of Votes',
+            data: arrOfSelected,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        },{
+            label: '# of showen',
+            backgroundColor: '#f1d1d0',
+            borderColor:'rgb(155,100,30)',
+            data: arrNumofshowen,
+        }]
+    }, options:{}
+});
 }

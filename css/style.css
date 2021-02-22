@@ -1,0 +1,33 @@
+*{
+    background-color: rgb(219, 219, 219);
+}
+img{
+    width: 200px;
+    height: 200px;
+    position: relative;
+    left: 25%;
+    
+}
+#lists{
+    display: none;
+}
+#view{
+    display: none;
+}
+h1{
+    font-family: cursive;
+    font-size: xx-large;
+    text-align: center;
+    color: palevioletred;
+    
+}
+button {
+    color: palevioletred;
+    font-size: xx-large;
+    font-family: cursive;
+}
+ul{
+    font-family: cursive;
+    color: palevioletred;
+}
+
