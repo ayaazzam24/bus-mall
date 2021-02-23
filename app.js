@@ -11,6 +11,7 @@ let arrNumofshowen = [];
 let arrTwo = [];
 let arrThree=[];
 
+
 function prd(name, source) {
     this.productName = name;
     this.source = source;
@@ -18,7 +19,10 @@ function prd(name, source) {
     this.numofShowen = 0;
     array.push(this);
     arrTwo.push(this.productName);
+   
 }
+
+
 new prd('bag', 'image/bag.jpg');
 new prd('banana', 'image/banana.jpg');
 new prd('bathroom.', 'image/bathroom.jpg');
@@ -64,7 +68,9 @@ function renderThreeRandomImages() {
     arrThree[2]= Image3Index;
 }
 // console.log(array);
+
 renderThreeRandomImages();
+
 
 
 
@@ -109,14 +115,19 @@ function imageClick(event) {
             arrOfSelected.push(array[a].selectedPrd );
             arrNumofshowen.push(array[a].numofShowen);
         }
-    
+        
         chartRender();
         document.getElementById('view').style.display = 'block';
         con.removeEventListener('click', imageClick)
-    
+
+        toSave();
+       
     }
-    leftImageElement.removeEventListener('click', handleClicking);
-    rightImageElement.removeEventListener('click', handleClicking);  
+    
+    
+    
+    container.removeEventListener('click',imageClick );
+   
 } 
 
 
@@ -124,6 +135,9 @@ function viewResult() {
     document.getElementById('lists').style.display = 'block';
 
 }
+
+
+
 
 function chartRender(){
 var ctx = document.getElementById('myChart').getContext('2d');
@@ -160,3 +174,20 @@ var myChart = new Chart(ctx, {
     }, options:{}
 });
 }
+
+function toSave(){
+    let lists = JSON.stringify(array);
+    localStorage.setItem('ALLlists', lists);
+}
+
+function toGet(){
+    let getLists =  localStorage.getItem('ALLlists');
+    let get = JSON.parse(getLists);
+    if(get){ 
+        array = get;
+      }else{
+        array = [];
+      }
+      renderThreeRandomImages();
+}
+toGet();
