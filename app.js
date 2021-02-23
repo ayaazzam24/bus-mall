@@ -126,7 +126,7 @@ function imageClick(event) {
     
     
     
-    container.removeEventListener('click',imageClick );
+    
    
 } 
 
