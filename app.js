@@ -101,6 +101,7 @@ function imageClick(event) {
             attemps++;
 
         }
+        toSave();
         renderThreeRandomImages();
     }
     else {
@@ -119,8 +120,8 @@ function imageClick(event) {
         chartRender();
         document.getElementById('view').style.display = 'block';
         con.removeEventListener('click', imageClick)
-
-        toSave();
+        
+       
        
     }
     
@@ -185,9 +186,7 @@ function toGet(){
     let get = JSON.parse(getLists);
     if(get){ 
         array = get;
-      }else{
-        array = [];
       }
-      renderThreeRandomImages();
+     
 }
 toGet();
